@@ -1,14 +1,14 @@
-if(NOT EXISTS "/home/andrej/School/Rocnikovy_projekt/cmake-build-debug/portaudio_folder/install_manifest.txt")
-  message(FATAL_ERROR "Cannot find install manifest: /home/andrej/School/Rocnikovy_projekt/cmake-build-debug/portaudio_folder/install_manifest.txt")
-endif(NOT EXISTS "/home/andrej/School/Rocnikovy_projekt/cmake-build-debug/portaudio_folder/install_manifest.txt")
+if(NOT EXISTS "/home/andrej/Code/Odin/cmake-build-debug/portaudio_folder/install_manifest.txt")
+  message(FATAL_ERROR "Cannot find install manifest: /home/andrej/Code/Odin/cmake-build-debug/portaudio_folder/install_manifest.txt")
+endif(NOT EXISTS "/home/andrej/Code/Odin/cmake-build-debug/portaudio_folder/install_manifest.txt")
 
-file(READ "/home/andrej/School/Rocnikovy_projekt/cmake-build-debug/portaudio_folder/install_manifest.txt" files)
+file(READ "/home/andrej/Code/Odin/cmake-build-debug/portaudio_folder/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 foreach(file ${files})
   message(STATUS "Uninstalling $ENV{DESTDIR}${file}")
   if(IS_SYMLINK "$ENV{DESTDIR}${file}" OR EXISTS "$ENV{DESTDIR}${file}")
     exec_program(
-      "/home/andrej/Apps/Clion/bin/cmake/linux/bin/cmake" ARGS "-E remove \"$ENV{DESTDIR}${file}\""
+      "/usr/bin/cmake" ARGS "-E remove \"$ENV{DESTDIR}${file}\""
       OUTPUT_VARIABLE rm_out
       RETURN_VALUE rm_retval
       )

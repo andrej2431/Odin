@@ -15,6 +15,7 @@ int main() {
     data.left_phase = data.right_phase = 0.0;
     /* Initialize library before making any other calls. */
     err = Pa_Initialize();
+
     if (err != paNoError) goto error;
 
     /* Open an audio I/O stream. */
@@ -25,6 +26,8 @@ int main() {
         err = numDevices;
         return err;
     }
+
+    std::cout << "device number:"<< numDevices << std::endl;
 
     const PaDeviceInfo *deviceInfo;
     for (int i = 0; i < numDevices; i++) {
