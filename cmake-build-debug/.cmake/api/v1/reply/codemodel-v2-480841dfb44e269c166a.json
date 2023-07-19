@@ -1,0 +1,108 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.23"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "portaudio_folder",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-portaudio_folder-Debug-066e1762257498f1fcb5.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "portaudio",
+					"targetIndexes" : 
+					[
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "Rocnikovy_projekt",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Rocnikovy_projekt::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Rocnikovy_projekt-Debug-2e92f43c87afe9402931.json",
+					"name" : "Rocnikovy_projekt",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "portaudio::@d49be7b4f06b560e7f90",
+					"jsonFile" : "target-portaudio-Debug-dfe6486e01fbe904adaf.json",
+					"name" : "portaudio",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "portaudio_static::@d49be7b4f06b560e7f90",
+					"jsonFile" : "target-portaudio_static-Debug-238089430aece5d4bd0b.json",
+					"name" : "portaudio_static",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "uninstall::@d49be7b4f06b560e7f90",
+					"jsonFile" : "target-uninstall-Debug-5826f735b3a6461fdced.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/andrej/School/Rocnikovy_projekt/cmake-build-debug",
+		"source" : "/home/andrej/School/Rocnikovy_projekt"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

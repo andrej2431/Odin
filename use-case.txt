@@ -1,0 +1,11 @@
+Ako užívateľ na OS Linux/Windows chcem vidieť audio sources a audio sinks a ich prepojenia
+Ako užívateľ na OS Linux/Windows chcem byť schopný zmeniť pridať a zrušiť pripojenie medzi audio source a audio sink
+Ako užívateľ na OS Linux chcem byť schopný pridať virtual sink, ktorý sa správa ako audio sink a navyše ho môžem vybrať ako mikrofón v aplikáciach ako Discord, Skype, etc.
+
+Ako užívateľ na OS Linux/Windows chcem vidieť výber rôznych filtrov na zmemenie audio prechádzajúceho cez prepojenie
+Ako užívateľ na OS Linux/Windows chcem byť schopný vytvoriť instanciu filtra
+Ako užívateľ na OS Linux/Windows chcem byť schopný aplikovať instanciu filtra na viaceré prepojenia
+Ako užívateľ na OS Linux/Windows chcem byť schopný zmeniť vytvorenú instanciu filtra, čo ovplyní všetky prepojenia s danou instanciou
+Ako užívateľ na OS Linux/Windows chcem byť schopný odstrániť instanciu filtra z prepojenia
+Ako užívateľ na OS Linux/Windows chcem byť schopný vymazať instanciu filtra, čím sa vymaže zo všetkých prepojení v ktorých sa nachádza
+Ako užívateľ na OS Linux/Windows chcem byť schopný vytvoriť instanciu filtra na zmenenie hlasitosti
