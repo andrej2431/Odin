@@ -1,0 +1,16 @@
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/CMakeFiles/AudioManager.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/CMakeFiles/edit_cache.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/CMakeFiles/rebuild_cache.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/CMakeFiles/list_install_components.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/CMakeFiles/install.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/CMakeFiles/install/local.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/CMakeFiles/install/strip.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/portaudio_folder/CMakeFiles/portaudio.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/portaudio_folder/CMakeFiles/portaudio_static.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/portaudio_folder/CMakeFiles/uninstall.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/portaudio_folder/CMakeFiles/edit_cache.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/portaudio_folder/CMakeFiles/rebuild_cache.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/portaudio_folder/CMakeFiles/list_install_components.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/portaudio_folder/CMakeFiles/install.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/portaudio_folder/CMakeFiles/install/local.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/AudioManager/portaudio_folder/CMakeFiles/install/strip.dir

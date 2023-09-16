@@ -1,0 +1,9 @@
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/Build/CMakeFiles/OdinApp.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/Build/CMakeFiles/edit_cache.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/Build/CMakeFiles/rebuild_cache.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/Build/CMakeFiles/list_install_components.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/Build/CMakeFiles/install.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/Build/CMakeFiles/install/local.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/Build/CMakeFiles/install/strip.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/Build/CMakeFiles/OdinApp_autogen_timestamp_deps.dir
+C:/Users/andre/Documents/School/C++/Odin/OdinApp/Build/CMakeFiles/OdinApp_autogen.dir
