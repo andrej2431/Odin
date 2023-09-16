@@ -1,7 +1,0 @@
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/opt/clion/bin/ninja/linux/x64/ninja -G Ninja -S /home/andrej/Code/Odin -B /home/andrej/Code/Odin/cmake-build-debug
-CMake Error at CMakeLists.txt:6 (add_subdirectory):
-  add_subdirectory given source "/home/andrej/Code/Odin/portaudio" which is
-  not an existing directory.
-
-
--- Configuring incomplete, errors occurred!
