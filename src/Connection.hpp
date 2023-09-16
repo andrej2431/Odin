@@ -3,6 +3,10 @@
 
 
 class Connection {
+public:
+    Connection() {}
+
+
 
 };
 

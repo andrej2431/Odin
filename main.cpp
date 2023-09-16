@@ -1,71 +1,144 @@
 #include <iostream>
-#include "test/test.h"
+#include <math.h>
+#include <vector>
+#include <string>
 
-const int SAMPLE_RATE = 44100;
-const int NUM_SECONDS = 4;
+#include "src/AudioException.hpp"
+#include "src/AudioManager.hpp"
+#include "portaudio.h"
+
+#define    NUM_SECONDS   (3)
+#define    SAMPLE_RATE   (44100)
+#define    FRAMES_PER_BUFFER   (1024)
+#define    TABLE_SIZE   (200)
 
 
-int main() {
-    paTestData data;
+typedef struct {
+    float sine[TABLE_SIZE];
+    int left_phase;
+    int right_phase;
+    char message[20] = "";
+}
+        paTestData;
+
+static int patestCallback(const void *inputBuffer, void *outputBuffer,
+                          unsigned long framesPerBuffer,
+                          const PaStreamCallbackTimeInfo *timeInfo,
+                          PaStreamCallbackFlags statusFlags,
+                          void *userData) {
+    paTestData *data = (paTestData *) userData;
+    float *out = (float *) outputBuffer;
+    unsigned long i;
+
+    (void) timeInfo; /* Prevent unused variable warnings. */
+    (void) statusFlags;
+    (void) inputBuffer;
+
+    return paContinue;
+
+    for (i = 0; i < framesPerBuffer; i++) {
+        *out++ = data->sine[data->left_phase];  /* left */
+        *out++ = data->sine[data->right_phase];  /* right */
+        data->left_phase += 1;
+        if (data->left_phase >= TABLE_SIZE) data->left_phase -= TABLE_SIZE;
+        data->right_phase += 3; /* higher pitch so we can distinguish left and right. */
+        if (data->right_phase >= TABLE_SIZE) data->right_phase -= TABLE_SIZE;
+    }
+    return paContinue;
+}
+
+static void StreamFinished(void *userData) {
+    auto *data = (paTestData *) userData;
+    printf("Stream Completed: %s\n", data->message);
+    std::cout << "END" << std::endl;
+}
+
+void populate_data(paTestData &data) {
+    for (int i = 0; i < TABLE_SIZE; i++) {
+        data.sine[i] = (float) sin(((double) i / (double) TABLE_SIZE) * M_PI * 2.);
+    }
+    data.left_phase = data.right_phase = 0;
+    std::cout << "data populated" << std::endl;
+}
+
+std::vector<const PaDeviceInfo *> get_device_infos() {
+    std::vector<const PaDeviceInfo *> device_infos;
+    int device_count = Pa_GetDeviceCount();
+    for (int i = 0; i < device_count; ++i) {
+        device_infos.push_back(Pa_GetDeviceInfo(i));
+    }
+
+    return device_infos;
+}
+
+
+void populateOutputParameters(PaStreamParameters &outputParameters) {
+
+    outputParameters.device = 5;
+    outputParameters.channelCount = 2;       /* MONO output */
+    outputParameters.sampleFormat = paFloat32; /* 32 bit floating point output */
+    outputParameters.suggestedLatency = Pa_GetDeviceInfo(outputParameters.device)->defaultLowOutputLatency;
+    outputParameters.hostApiSpecificStreamInfo = nullptr;
+}
+
+void test_stuff() {
+    int hostApiIndex = Pa_HostApiTypeIdToHostApiIndex(PaHostApiTypeId::paALSA);
+    if(hostApiIndex < 0) {
+        throw AudioException("ALSA not found");
+    }
+    auto hostApiInfo = Pa_GetHostApiInfo(hostApiIndex);
+    for(int i = 0; i < hostApiInfo->deviceCount; ++i){
+        int deviceIndex = Pa_HostApiDeviceIndexToDeviceIndex(hostApiIndex, i);
+        auto deviceInfo = Pa_GetDeviceInfo(deviceIndex);
+        std::cout << "ALSA device: " << deviceInfo->name << std::endl;
+    }
+}
+
+PaError play_sound() {
     PaStream *stream;
+
+    test_stuff();
+
+    paTestData data;
+    populate_data(data);
+
+    PaStreamParameters outputParameters;
+    populateOutputParameters(outputParameters);
+
+    std::cout << "Default output device: " << outputParameters.device << " no device: "
+              << paNoDevice << std::endl;
+
     PaError err;
-
-    printf("PortAudio Test: output sawtooth wave.\n");
-    /* Initialize our data for use by callback. */
-    data.left_phase = data.right_phase = 0.0;
-    /* Initialize library before making any other calls. */
-    err = Pa_Initialize();
-
-    if (err != paNoError) goto error;
-
-    /* Open an audio I/O stream. */
-    int numDevices;
-    numDevices = Pa_GetDeviceCount();
-    if (numDevices < 0) {
-        printf("ERROR: Pa_CountDevices returned 0x%x\n", numDevices);
-        err = numDevices;
-        return err;
-    }
-
-    std::cout << "device number:"<< numDevices << std::endl;
-
-    const PaDeviceInfo *deviceInfo;
-    for (int i = 0; i < numDevices; i++) {
-        deviceInfo = Pa_GetDeviceInfo(i);
-        std::cout << deviceInfo->name << std::endl;
-    }
-
-    err = Pa_OpenDefaultStream(
+    err = Pa_OpenStream(
             &stream,
-            0,          /* no input channels */
-            2,          /* stereo output */
-            paFloat32,  /* 32 bit floating point output */
+            nullptr, /* no input */
+            &outputParameters,
             SAMPLE_RATE,
-            256,        /* frames per buffer */
+            FRAMES_PER_BUFFER,
+            paClipOff,
             patestCallback,
             &data);
+    if (err != paNoError) return err;
 
-    if (err != paNoError) goto error;
+    sprintf(data.message, "No Message");
+    err = Pa_SetStreamFinishedCallback(stream, &StreamFinished);
+    if (err != paNoError) return err;
 
     err = Pa_StartStream(stream);
-    if (err != paNoError) goto error;
+    if (err != paNoError) return err;
 
     /* Sleep for several seconds. */
-    Pa_Sleep(0 * 1000);
+    Pa_Sleep(NUM_SECONDS * 1000);
 
     err = Pa_StopStream(stream);
-    if (err != paNoError) goto error;
+    if (err != paNoError) return err;
+
     err = Pa_CloseStream(stream);
-    if (err != paNoError) goto error;
-    Pa_Terminate();
-    printf("Test finished.\n");
     return err;
+}
 
-
-    error:
-    Pa_Terminate();
-    std::cerr << "An error occurred while using the portaudio stream\n"
-    << "Error number: %d\n" << err
-    << "Error message: %s\n" <<  Pa_GetErrorText(err);
-    return err;
+int main() {
+    AudioManager audioManager = AudioManager();
+    std::cout << "deviceCount: " << audioManager.getDeviceCount() << std::endl;
+    std::cout << audioManager.getHostApiInfo()->name << std::endl;
 }

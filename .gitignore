@@ -1,1 +1,3 @@
 .idea
+portaudio/
+CMakeLists.txt
