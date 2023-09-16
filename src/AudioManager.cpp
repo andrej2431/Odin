@@ -12,7 +12,11 @@ AudioManager::AudioManager() {
 #ifdef __linux__
     hostApiTypeId = paALSA;
 #else
+#ifdef __WIN64
+    hostApiTypeId = paWDMKS;
+#else
     throw AudioException("Unsupported operating system");
+#endif
 #endif
     hostApiIndex_ = Pa_HostApiTypeIdToHostApiIndex(hostApiTypeId);
 
@@ -25,10 +29,14 @@ AudioManager::AudioManager() {
 
 void AudioManager::updateDevices() {
     auto hostApiInfo = Pa_GetHostApiInfo(hostApiIndex_);
-    for (int i = 0; i < hostApiInfo->deviceCount; ++i) {
+    for (int i = 1; i < hostApiInfo->deviceCount; ++i) {
         auto deviceIndex = Pa_HostApiDeviceIndexToDeviceIndex(hostApiIndex_, i);
         auto deviceInfo = Pa_GetDeviceInfo(deviceIndex);
-        std::cout << deviceInfo->name << " " <<deviceInfo->hostApi  << std::endl;
+        try {
+            devices_.emplace_back(deviceInfo);
+        } catch (AudioException &ex) {
+            std::cout << ex.what() << std::endl;
+        }
     }
 }
 
@@ -46,13 +54,7 @@ const PaHostApiInfo *AudioManager::getHostApiInfo() const {
 }
 
 int AudioManager::getDeviceCount() {
-
-    int numDevices = Pa_GetDeviceCount();
-    if (numDevices < 0) {
-        throw AudioException("");
-    }
-
-    return numDevices;
+    return devices_.size();
 }
 
 const PaDeviceInfo *AudioManager::getDeviceInfo(int deviceNumber) {

@@ -4,49 +4,33 @@
 #include "portaudio.h"
 #include "AudioException.hpp"
 #include <string>
+#include <iostream>
 
-constexpr framesPerBuffer = 
+constexpr int framesPerBuffer = 256;
 
 class Device {
 public:
-    explicit Device(const PaDeviceInfo *deviceInfo) : deviceInfo_(deviceInfo) {
-        if (isInputDevice()) {
-            inputParameters_.device = id();
-            inputParameters_.channelCount = inputChannelCount();
-            inputParameters_.sampleFormat = paFloat32;
-            inputParameters_.hostApiSpecificStreamInfo = nullptr;
-            inputParameters_.suggestedLatency = deviceInfo_->defaultLowInputLatency;
+    explicit Device(const PaDeviceInfo *deviceInfo);
 
-        }
+    ~Device() noexcept;
 
-        if (isOutputDevice()) {
-            outputParameters_.device = id();
-            outputParameters_.channelCount = outputChannelCount();
-            outputParameters_.sampleFormat = paFloat32;
-            outputParameters_.hostApiSpecificStreamInfo = nullptr;
-            outputParameters_.suggestedLatency = deviceInfo_->defaultLowOutputLatency;
-        }
-
-        const PaStreamParameters *inputParametersPtr = isInputDevice() ? &inputParameters_ : nullptr;
-        const PaStreamParameters *outputParametersPtr = isOutputDevice() ? &outputParameters_ : nullptr;
-        double sampleRate = deviceInfo_->defaultSampleRate;
-
-        PaError err = Pa_IsFormatSupported(inputParametersPtr, outputParametersPtr, sampleRate);
-        if(err != paNoError){
-            throw AudioException(Pa_GetErrorText(err));
-        }
-
-        Pa_OpenStream(&stream_, inputParametersPtr, outputParametersPtr, sampleRate, )
-
-    }
-
-    int playCallback(const void *input,
+    static int routeCallbackToMemberFunction(const void *input,
                      void *output,
                      unsigned long frameCount,
                      const PaStreamCallbackTimeInfo* timeInfo,
                      PaStreamCallbackFlags statusFlags,
-                     void *userData){
+                     void *instancePtr){
+        if(auto self = reinterpret_cast<Device*>(instancePtr))
+            return self->callback(input, output, frameCount, timeInfo, statusFlags);
+        return 0;
+    }
 
+    int callback(const void *input,
+                 void *output,
+                 unsigned long frameCount,
+                 const PaStreamCallbackTimeInfo* timeInfo,
+                 PaStreamCallbackFlags statusFlags){
+        std::cout << "callback" << std::endl;
     }
 
     int id() {
@@ -75,9 +59,11 @@ public:
 private:
     std::string nickname_;
     const PaDeviceInfo *deviceInfo_;
+
     PaStreamParameters inputParameters_;
     PaStreamParameters outputParameters_;
     PaStream* stream_;
+
 
 };
 

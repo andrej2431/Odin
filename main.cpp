@@ -138,7 +138,11 @@ PaError play_sound() {
 }
 
 int main() {
-    AudioManager audioManager = AudioManager();
-    std::cout << "deviceCount: " << audioManager.getDeviceCount() << std::endl;
-    std::cout << audioManager.getHostApiInfo()->name << std::endl;
+    try {
+        AudioManager audioManager = AudioManager();
+        std::cout << "\ndeviceCount: " << audioManager.getDeviceCount() << std::endl;
+        std::cout << audioManager.getHostApiInfo()->name << std::endl;
+    } catch(AudioException& ex){
+        std::cout << ex.what() << std::endl;
+    }
 }
